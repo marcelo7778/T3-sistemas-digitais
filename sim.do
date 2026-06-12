@@ -5,7 +5,7 @@ vmap work work
 
 vlog -work work Emulador_sensor.sv
 vlog -work work Master_spi.sv
-vlog -work work Scratchped_ram_Teste.sv
+vlog -work work Scratchped_ram_Test.sv
 vlog -work work Top.sv
 vlog -work work tb_Top.sv
 
