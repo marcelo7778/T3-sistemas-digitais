@@ -43,17 +43,19 @@ module tb_Top();
         begin
             $display("--- Iniciando leitura do Sensor %0d (%s) ---", id_alvo, nome_sensor);
             
-            // 1. Envia comando
+            // 1. Sincroniza e envia comando
             @(posedge clk_100M);
             reg_id = id_alvo;
             start = 1'b1;
             
-            // 2. Aguarda um ciclo e desliga o start
+            // 2. CORREÇÃO CRÍTICA: Espera o Master confirmar que começou a trabalhar
+            wait(ready == 1'b0);
+            
+            // 3. Agora podemos desligar o comando start com segurança
             @(posedge clk_100M);
             start = 1'b0;
 
-            // 3. Espia qual valor deveria ser lido (Referência Hierárquica)
-            // Aqui acessamos diretamente a variável interna para criar o gabarito
+            // 4. Espia o valor que será salvo (Gabarito)
             case(id_alvo)
                 2'b00: valor_esperado = uut.Sensor1.regs[uut.Sensor1.reg_index];
                 2'b01: valor_esperado = uut.Sensor2.regs[uut.Sensor2.reg_index];
@@ -61,15 +63,14 @@ module tb_Top();
                 2'b11: valor_esperado = uut.Sensor4.regs[uut.Sensor4.reg_index];
             endcase
 
-            // 4. Espera a máquina de estados trabalhar e sinalizar que terminou
+            // 5. Espera o Master fazer todas as leituras SPI e voltar a ficar livre
             wait(ready == 1'b1);
             
-            // Dá um tempo extra para a RAM atualizar o sinal de saída sincrono
+            // Dá um tempo extra para a RAM atualizar o sinal de saída síncrono
             @(posedge clk_100M);
             @(posedge clk_100M); 
 
-            // 5. Checagem Automática (Self-Checking)
-            // Lemos direto da posição de memória que o Mestre supostamente escreveu
+            // 6. Checagem Automática
             if (uut.ram_block.memory[addr_esperado] === valor_esperado) begin
                 $display("[PASS] Sucesso! Valor lido do Sensor %0d: %h. Salvo no endereço %0d.", id_alvo, valor_esperado, addr_esperado);
             end else begin
@@ -77,12 +78,12 @@ module tb_Top();
                 erros++;
             end
             
-            // Como a escrita do mestre é incremental, o próximo endereço será +1
             addr_esperado++; 
             $display("--------------------------------------------------");
         end
     endtask
 
+        // --- Rotina Principal de Simulação ---
     initial begin
         $display("==================================================");
         $display("   INICIANDO TESTE DO COLETOR MULTI-CLOCK SPI");
@@ -91,15 +92,19 @@ module tb_Top();
         // Sinais Iniciais
         start  = 0;
         reg_id = 0;
-        reset  = 0; // Ativa o reset genérico
+        reset  = 1; // CORREÇÃO: Tem que começar em 1!
         
-        // Aguarda estabilizar e desliga o reset
+        #10;
+        reset = 0;  // Agora sim ocorre o "negedge" e o sistema inicializa
+        
         #100;
-        reset = 1;
+        reset = 1;  // Libera o reset para a simulação rodar
         
         // Aguarda o sistema indicar que está pronto para o primeiro comando
         wait(ready == 1'b1);
-        #50; // Tempo de respiro
+        #50; 
+        
+        // ... (resto do seu código mantém igual)
         
         // Realiza um ciclo de leituras para testar os diferentes clocks e a multiplexação
         ler_sensor_e_verificar(2'b00, "Sensor 1 - 15MHz");
