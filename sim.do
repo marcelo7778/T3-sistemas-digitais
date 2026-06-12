@@ -17,6 +17,6 @@ quietly set StdVitalGlitchNoWarnings 1
 add wave -r /*
 
 
-run 1000ns
+run 1500ns
 
 wave zoom full
