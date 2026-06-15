@@ -70,11 +70,11 @@ module tb_Top();
             @(posedge clk_100M);
             @(posedge clk_100M); 
 
-            // 6. Checagem Automática
-            if (uut.ram_block.memory[addr_esperado] === valor_esperado) begin
-                $display("[PASS] Sucesso! Valor lido do Sensor %0d: %h. Salvo no endereço %0d.", id_alvo, valor_esperado, addr_esperado);
+            // 6. Checagem Automática usando a saída oficial do TOP (ram_data_o)
+            if (ram_data_o === valor_esperado) begin
+                $display("[PASS] Sucesso! Valor lido do Sensor %0d: %h. RAM expos corretamente %h no pino data_o.", id_alvo, valor_esperado, ram_data_o);
             end else begin
-                $display("[FAIL] ERRO! Sensor %0d enviou %h, mas a RAM salvou %h no endereço %0d.", id_alvo, valor_esperado, uut.ram_block.memory[addr_esperado], addr_esperado);
+                $display("[FAIL] ERRO! Sensor %0d enviou %h, mas a RAM expos %h no pino data_o.", id_alvo, valor_esperado, ram_data_o);
                 erros++;
             end
             
@@ -98,13 +98,12 @@ module tb_Top();
         reset = 0;  // Agora sim ocorre o "negedge" e o sistema inicializa
         
         #100;
-        reset = 1;  // Libera o reset para a simulação rodar
+        reset = 1; //libera reset
         
         // Aguarda o sistema indicar que está pronto para o primeiro comando
         wait(ready == 1'b1);
         #50; 
         
-        // ... (resto do seu código mantém igual)
         
         // Realiza um ciclo de leituras para testar os diferentes clocks e a multiplexação
         ler_sensor_e_verificar(2'b00, "Sensor 1 - 15MHz");
