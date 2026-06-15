@@ -1,17 +1,17 @@
 module scratchpad_ram (
-    input  logic       clk,      // Operará a 100 MHz junto com o Coletor
-    input  logic [7:0] data_i,   // Dado vindo do Coletor
-    input  logic [7:0] addr,     // Endereço incremental vindo do Coletor
-    input  logic       we,       // Write Enable vindo do Coletor
-    output logic [7:0] data_o    // Saída exposta para validação do Testbench
+    input  logic       clk,      
+    input  logic [7:0] data_i,   
+    input  logic [7:0] addr,     
+    input  logic       we,       
+    output logic [7:0] data_o    
 );
-    // Memória de 256 posições de 8 bits (2^8 x 8)
-    logic [7:0] memory [256];
+    // inicializa a leitura com 0
+    logic [7:0] memory [256] = '{default: 8'd0};
 
     always_ff @(posedge clk) begin
         if (we) begin
-            memory[addr] <= data_i; // Escrita síncrona
+            memory[addr] <= data_i; 
         end
-        data_o <= memory[addr];     // Leitura contínua/síncrona
+        data_o <= memory[addr]; 
     end
 endmodule
