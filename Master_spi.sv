@@ -34,7 +34,7 @@ module Master_Spi (
     always_ff @(posedge clk or negedge reset) begin
         if (!reset) begin
             state      <= ST_IDLE;
-            ram_addr   <= 8'd0;
+            ram_addr   <= 8'hFF; 
             shift_rx   <= 8'd0;
             bit_cnt    <= 3'd0;
             active_sensor <= 2'b00;
@@ -43,19 +43,20 @@ module Master_Spi (
             ram_we     <= 1'b0;
             ready      <= 1'b0;
         end else begin
-            ram_we <= 1'b0; // O padrão é desligado
+            ram_we <= 1'b0; 
 
             case (state)
                 ST_IDLE: begin
                     sclk <= 1'b0;
                     if (start) begin
+                        ram_addr      <= ram_addr + 1'b1; 
                         active_sensor <= reg_id;
                         bit_cnt       <= 3'd0;
-                        se[reg_id]    <= 1'b1; // Acorda o sensor IMEDIATAMENTE
-                        ready         <= 1'b0; // Avisa o TB que ficou ocupado
+                        se[reg_id]    <= 1'b1; 
+                        ready         <= 1'b0; 
                         state         <= ST_SPI_LOW;
                     end else begin
-                        ready <= 1'b1; // Permanece livre
+                        ready <= 1'b1; 
                         se    <= 4'b0000;
                     end
                 end
@@ -69,7 +70,7 @@ module Master_Spi (
                 ST_SPI_HIGH: begin
                     se[active_sensor] <= 1'b1;
                     sclk              <= 1'b1; 
-                    shift_rx          <= {shift_rx[6:0], miso}; // Captura
+                    shift_rx          <= {shift_rx[6:0], miso}; 
                     bit_cnt           <= bit_cnt + 1'b1;
                     
                     if (bit_cnt == 3'd7) begin
@@ -82,13 +83,12 @@ module Master_Spi (
                 ST_MEM_WRITE: begin
                     sclk       <= 1'b0;
                     se         <= 4'b0000;
-                    ram_we     <= 1'b1; // Dispara pulso na RAM
+                    ram_we     <= 1'b1; 
                     state      <= ST_MEM_UPDATE;
                 end
 
                 ST_MEM_UPDATE: begin
-                    ram_addr   <= ram_addr + 1'b1; // Avança memória
-                    state      <= ST_IDLE;         // Retorna
+                    state      <= ST_IDLE;         
                 end
                 
                 default: state <= ST_IDLE;
