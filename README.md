@@ -57,19 +57,19 @@ Abaixo está o registro de saída do console comprovando a leitura exata dos sen
    INICIANDO TESTE DO COLETOR MULTI-CLOCK SPI
 ==================================================
 --- Iniciando leitura do Sensor 0 (Sensor 1 - 15MHz) ---
-[PASS] Sucesso! Valor lido do Sensor 0: bc. RAM expôs corretamente bc no pino data_o.
+[PASS] Sucesso! Valor lido do Sensor 0: bc. RAM expos corretamente bc no pino data_o.
 --------------------------------------------------
 --- Iniciando leitura do Sensor 1 (Sensor 2 - 40MHz) ---
-[PASS] Sucesso! Valor lido do Sensor 1: 41. RAM expôs corretamente 41 no pino data_o.
+[PASS] Sucesso! Valor lido do Sensor 1: 41. RAM expos corretamente 41 no pino data_o.
 --------------------------------------------------
 --- Iniciando leitura do Sensor 2 (Sensor 3 - 50MHz) ---
-[PASS] Sucesso! Valor lido do Sensor 2: eb. RAM expôs corretamente eb no pino data_o.
+[PASS] Sucesso! Valor lido do Sensor 2: eb. RAM expos corretamente eb no pino data_o.
 --------------------------------------------------
 --- Iniciando leitura do Sensor 3 (Sensor 4 - 25MHz) ---
-[PASS] Sucesso! Valor lido do Sensor 3: 85. RAM expôs corretamente 85 no pino data_o.
+[PASS] Sucesso! Valor lido do Sensor 3: 85. RAM expos corretamente 85 no pino data_o.
 --------------------------------------------------
 --- Iniciando leitura do Sensor 0 (Sensor 1 - 15MHz (Leitura Registrador 2)) ---
-[PASS] Sucesso! Valor lido do Sensor 0: 2a. RAM expôs corretamente 2a no pino data_o.
+[PASS] Sucesso! Valor lido do Sensor 0: 2a. RAM expos corretamente 2a no pino data_o.
 --------------------------------------------------
 
 ==================================================
