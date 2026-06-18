@@ -6,9 +6,9 @@
 
 ## 👥 Equipe
 * Marcelo Vaz Barros
-* [Nome do Aluno 2]
-* [Nome do Aluno 3]
-* [Nome do Aluno 4 (se houver)]
+* Henzo Gradschi de Vasconcellos
+* Eduardo Castilhos de Castilho
+* Pedro Henrique Corral Livi
 
 ---
 
