@@ -5,7 +5,7 @@
 **Ano/Semestre:** 2026/1  
 
 ## 👥 Equipe
-* [Nome do Aluno 1]
+* Marcelo Vaz Barros
 * [Nome do Aluno 2]
 * [Nome do Aluno 3]
 * [Nome do Aluno 4 (se houver)]
