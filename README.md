@@ -9,7 +9,6 @@
 * [Nome do Aluno 2]
 * [Nome do Aluno 3]
 * [Nome do Aluno 4 (se houver)]
-* [Nome do Aluno 5 (se houver)]
 
 ---
 
