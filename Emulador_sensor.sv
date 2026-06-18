@@ -18,16 +18,16 @@ module sensor #(
     // Substituímos o shift_reg por um ponteiro seguro
     logic [2:0] bit_idx; 
 
-    // --- 1. Inicialização dos Sensores ---
+    // Inicialização dos Sensores
     always_ff @(posedge clock or negedge reset) begin   
         if (!reset) begin
             for (int i = 0; i < REG_COUNT; i++) begin
-                regs[i] <= $random; // Removida a seed fixa para evitar falhas de compilação
+                regs[i] <= $random; 
             end
         end
     end
 
-    // --- 2. Controle de Endereçamento dos Registradores ---
+    // Controle de Endereçamento dos Registradores
     always_ff @(negedge se or negedge reset) begin
         if (!reset) begin
             reg_index <= '0;
@@ -39,20 +39,18 @@ module sensor #(
         end
     end
 
-    // --- 3. Controle Mux SPI (Imune a estados 'x') ---
-    // Triple-trigger garante que a variável inicie e limpe de forma imaculada
+    // Controle Mux SPI 
     always_ff @(negedge sclk or negedge se or negedge reset) begin
         if (!reset) begin
             bit_idx <= 3'd7;
         end else if (!se) begin
-            bit_idx <= 3'd7;       // Reinicia o ponteiro quando o Master desliga a linha
+            bit_idx <= 3'd7;       
         end else begin
-            bit_idx <= bit_idx - 1'b1; // Desloca para o próximo bit no clock do Master
+            bit_idx <= bit_idx - 1'b1; 
         end
     end
 
-    // --- 4. Saída MISO ---
-    // Joga o bit exato diretamente na saída.
+    // Saída MISO
     assign miso = se ? regs[reg_index][bit_idx] : 1'b0;
 
 endmodule
