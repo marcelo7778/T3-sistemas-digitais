@@ -27,24 +27,22 @@ O sistema é composto por um **Coletor de Dados (Master)** operando a 100 MHz, q
 
 ### Estrutura de Arquivos
 * `Top.sv`: Módulo principal que unifica os componentes, distribui os domínios de clock e implementa o multiplexador de barramento MISO.
-* `Master_Spi.sv`: Máquina de estados Síncrona do Coletor, responsável por gerar o SCLK seguro, ler os dados via SPI e gravar na RAM.
-* `sensor.sv`: Emulador de sensor robusto com ponteiros indexados para transferências seguras entre domínios de clock diferentes.
-* `scratchpad_ram.sv`: Memória RAM de 256 posições de 8 bits para armazenamento incremental.
-* `tb_Top.sv`: Testbench automatizado (Self-Checking) que gera os estímulos e valida o funcionamento da RAM através de referências hierárquicas.
-
+* `Master_spi.sv`: Máquina de estados Síncrona do Coletor, responsável por gerar o SCLK seguro, ler os dados via SPI e gravar na RAM.
+* `Emulador_sensor.sv`: Emulador de sensor robusto com ponteiros indexados para transferências seguras entre domínios de clock diferentes.
+* `Scratchped_ram_Test.sv`: Memória RAM de 256 posições de 8 bits para armazenamento incremental sem estados indefinidos.
+* `tb_Top.sv`: Testbench automatizado (Self-Checking) que gera os estímulos e valida o funcionamento da RAM.
+* `sim.do`: Script TCL para automação da compilação e execução da simulação.
 ---
 
-## 🚀 Instruções de Execução
-O projeto foi desenvolvido e validado para ser executado no simulador **Questa / ModelSim**.
+## 🚀 Instruções de Execução (via Script)
+O projeto conta com um script de automação (`sim.do`) para facilitar a compilação e execução no simulador **Questa / ModelSim**, evitando configurações manuais.
 
 1. Clone este repositório para o seu ambiente local.
 2. Abra o software de simulação (ModelSim/Questa).
-3. Crie um novo projeto ou mude o diretório atual (`File > Change Directory`) para a pasta clonada.
-4. Adicione todos os arquivos `.sv` ao projeto e compile-os (`Compile > Compile All`).
-5. Inicie a simulação definindo o módulo `tb_Top.sv` como o *top-level* do teste (`Simulate > Start Simulation`).
-6. Adicione os sinais desejados à aba *Waveform* para visualizar as transações SPI.
-7. Execute a simulação completa (`Run -All`). O resultado do *Self-Checking* será impresso no terminal (*Transcript*).
-
+3. Mude o diretório atual do simulador para a pasta onde os arquivos foram clonados (`File > Change Directory`).
+4. Na linha de comando do simulador (aba *Transcript*), execute o script digitando:
+   ```tcl
+   do sim.do
 ---
 
 ## ✅ Resultados Obtidos
