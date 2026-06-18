@@ -7,12 +7,12 @@ module Top (
     
     input logic reset,    // reset ativo em baixo
 
-    // --- Interface de Comando (+tb) ---
+    // Interface de Comando
     input  logic       start,  // TB inicia uma varredura
     input  logic [1:0] reg_id, // TB escolhe qual ID de sensor ler
     output logic       ready,  // Top avisa ao TB que está pronto/ocioso
 
-    // --- Interface de Verificação (tb) ---
+    // Interface de Verificação
     output logic [7:0] ram_data_o // Permite ao TB ler o que foi salvo na RAM
 );
 
@@ -86,9 +86,7 @@ module Top (
     );
 
 
-    // =========================================================================
-    // 2. MULTIPLEXADOR DAS LINHAS MISO (Conforme diagrama da página 2)
-    // =========================================================================
+    // MULTIPLEXADOR DAS LINHAS MISO 
     // Isola e conecta o pino MISO correto ao Master com base no chip-select ativo.
     always_comb begin
         case (se_net)
@@ -105,7 +103,7 @@ module Top (
         .clk(clk_100M),
         .reset(reset),
         
-        // Conexões direcionadas para a interface de controle externa (TB)
+        // Conexões direcionadas para a interface de controle externa
         .start(start),
         .reg_id(reg_id),
         .ready(ready),
