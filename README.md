@@ -4,7 +4,7 @@
 **Professor:** Anderson Domingues  
 **Ano/Semestre:** 2026/1  
 
-## 👥 Equipe
+## Equipe
 * Marcelo Vaz Barros
 * Henzo Gradschi de Vasconcellos
 * Eduardo Castilhos de Castilho
@@ -12,7 +12,7 @@
 
 ---
 
-## 💻 Apresentação do Projeto
+## Apresentação do Projeto
 Este projeto implementa um sistema de hardware em SystemVerilog focado na resolução de desafios de **Clock Domain Crossing (CDC)** e comunicação serial via protocolo **SPI**.
 
 O sistema é composto por um **Coletor de Dados (Master)** operando a 100 MHz, que se comunica com **4 Emuladores de Sensor (Slaves)** operando em frequências distintas e assíncronas. Os dados coletados são gravados de forma sequencial em uma memória **Scratchpad RAM** ($2^8 \times 8$).
@@ -33,7 +33,7 @@ O sistema é composto por um **Coletor de Dados (Master)** operando a 100 MHz, q
 * `sim.do`: Script TCL para automação da compilação e execução da simulação.
 ---
 
-## 🚀 Instruções de Execução (via Script)
+## Instruções de Execução (via Script)
 O projeto conta com um script de automação (`sim.do`) para facilitar a compilação e execução no simulador **Questa / ModelSim**, evitando configurações manuais.
 
 1. Clone este repositório para o seu ambiente local.
@@ -44,7 +44,7 @@ O projeto conta com um script de automação (`sim.do`) para facilitar a compila
    do sim.do
 ---
 
-## ✅ Resultados Obtidos
+## Resultados Obtidos
 O sistema passou com sucesso em todos os testes automatizados, provando que não há perda de dados ou metainstabilidade (*glitches*) durante o cruzamento de domínios de clock ou na gravação em memória.
 
 Abaixo está o registro de saída do console comprovando a leitura exata dos sensores e a gravação correta na RAM:
